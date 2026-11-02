@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS position playground — static vs relative vs absolute vs fixed vs sticky</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <h1>CSS <code>position</code> playground</h1>
+      <p class="lead">
+        Box <strong>B</strong> is the one being positioned. The dashed outline shows where B
+        would sit in normal flow. Scroll inside the viewport frame to see how
+        <code>sticky</code> and <code>fixed</code> behave.
+      </p>
+    </header>
+
+    <section class="controls">
+      <div class="modes" id="modes" role="group" aria-label="Position value">
+        <button class="mode on" data-m="static">static</button>
+        <button class="mode" data-m="relative">relative</button>
+        <button class="mode" data-m="absolute">absolute</button>
+        <button class="mode" data-m="fixed">fixed</button>
+        <button class="mode" data-m="sticky">sticky</button>
+      </div>
+      <div class="sliders">
+        <label>top <input type="range" id="top" min="0" max="120" step="1" value="30" /><span id="topv">30px</span></label>
+        <label>left <input type="range" id="left" min="0" max="250" step="1" value="80" /><span id="leftv">80px</span></label>
+      </div>
+    </section>
+
+    <section class="stage">
+      <!-- transform makes this the containing block for position: fixed,
+           so the "fixed" demo is pinned to this frame instead of the real window -->
+      <div class="viewport" id="vp">
+        <div class="vp-label">viewport (scroll me)</div>
+        <div class="scroller" id="sc">
+          <div class="parent" id="parent">
+            <div class="parent-label">.parent { position: relative }</div>
+            <div class="ghost" id="ghost">B's reserved slot</div>
+            <div class="box a">A — static, in flow</div>
+            <div class="box b" id="B">B — position: static</div>
+            <div class="box c">C — static, in flow</div>
+            <p class="filler">Paragraph 1 inside the parent. Scroll to see sticky stick and fixed stay put.</p>
+            <p class="filler">Paragraph 2 — more content to scroll past.</p>
+            <p class="filler">Paragraph 3 — still inside the parent.</p>
+            <p class="filler">Paragraph 4 — keep going.</p>
+            <p class="filler">Paragraph 5 — sticky lets go when the parent ends.</p>
+            <p class="filler">Paragraph 6 — end of parent.</p>
+          </div>
+          <p class="filler outside">Content after the parent.</p>
+          <p class="filler">More page content…</p>
+          <p class="filler">More page content…</p>
+          <p class="filler">More page content…</p>
+          <p class="filler">More page content…</p>
+        </div>
+      </div>
+
+      <aside class="side">
+        <pre id="code"></pre>
+        <div class="note" id="note"></div>
+      </aside>
+    </section>
+
+    <section class="cheatsheet">
+      <h2>Cheat sheet</h2>
+      <table>
+        <thead>
+          <tr><th>Value</th><th>Keeps its space?</th><th><code>top</code>/<code>left</code> measured from</th><th>Scrolls with page?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>static</code></td><td>Yes</td><td>Ignored</td><td>Yes</td></tr>
+          <tr><td><code>relative</code></td><td>Yes (gap stays behind)</td><td>Its own normal position</td><td>Yes</td></tr>
+          <tr><td><code>absolute</code></td><td><strong>No</strong> — out of flow</td><td>Nearest non-static ancestor</td><td>Yes</td></tr>
+          <tr><td><code>fixed</code></td><td><strong>No</strong> — out of flow</td><td>The viewport</td><td>No</td></tr>
+          <tr><td><code>sticky</code></td><td>Yes</td><td>Scroll container, once threshold is hit</td><td>Until its parent scrolls away</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
